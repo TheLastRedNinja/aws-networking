@@ -10,6 +10,20 @@
     install_docker: true
 
   tasks:
+    - name: Change urllib3 version for compatibility
+      tags: [urllib3]
+      block:
+        - name: uninstall urllib3 v2.0
+          pip:
+            name: urllib3
+            state: absent
+
+        - name: install urllib3 >v2.0
+          pip:
+            name: urllib3
+            version: <2.0
+            state: present
+
     - name: configure docker
       when: install_docker
       tags: [docker]
@@ -24,10 +38,15 @@
             name: docker
             state: started
 
+        - name: install docker SDK
+          pip:
+            name: docker
+            state: present
+
     - name: install web-server
       tags: [web-server]
       docker_container:
-        name: {{ inventory_hostname }}
+        name: "{{ inventory_hostname }}"
         image: "benpiper/r53-ec2-web"
         state: started
         detach: yes
@@ -35,5 +54,3 @@
         pull: yes  # Ensures the latest version is pulled
         ports:
           - "80:80"
-        env:
-          MY_ENV_VAR: "my-value"  # Set environment variables if needed
