@@ -1,0 +1,11 @@
+all_servers:
+  vars:
+    ansible_ssh_user: ec2-user
+    has_internet_access: true
+    is_server: true
+
+  children:
+    web_servers:
+      hosts:
+        dns_web1_ec2: {}
+        dns_web2_ec2: {}

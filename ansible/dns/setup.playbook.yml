@@ -1,0 +1,39 @@
+- name: provision web servers for dns workshop
+  hosts: web_servers
+  become: true
+  gather_facts: no
+
+  vars_files:
+    - 'vars/web_server.yml'
+
+  vars:
+    install_docker: true
+
+  tasks:
+    - name: configure docker
+      when: install_docker
+      tags: [docker]
+      block:
+        - name: install docker
+          yum:
+            name: docker
+            state: present
+
+        - name: start docker
+          service:
+            name: docker
+            state: started
+
+    - name: install web-server
+      tags: [web-server]
+      docker_container:
+        name: {{ inventory_hostname }}
+        image: "benpiper/r53-ec2-web"
+        state: started
+        detach: yes
+        auto_remove: true
+        pull: yes  # Ensures the latest version is pulled
+        ports:
+          - "80:80"
+        env:
+          MY_ENV_VAR: "my-value"  # Set environment variables if needed
