@@ -7,8 +7,8 @@ all_servers:
   children:
     web_servers:
       hosts:
-        dns_web1_east: {}
-        dns_web2_east: {}
+        dns_web1_west: {}
+        dns_web2_west: {}
     databases:
       hosts:
-        dns_db_east: {}
+        dns_db_west: {}

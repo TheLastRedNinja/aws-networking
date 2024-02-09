@@ -1,5 +1,5 @@
 module "vpc-dns-lab-west" {
-  source = "../../../modules/network/vpc"
+  source = "../../../../modules/network/vpc"
 
   vpc-name = local.vpc-west-config.vpc-name
   vpc-cidr = local.vpc-west-cidr

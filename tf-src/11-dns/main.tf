@@ -5,12 +5,12 @@ locals {
     Owner             = "Denis Murphy"
     Terraform         = true
     TerminationPolicy = "Can be deleted by anyone without notice"
-    Created           = "17.01.2024"
+    Created           = "22.01.2024"
   }
 
   local-machine-ip = "82.135.44.82/32"
-  base-domain      = "http://sphalerondecays456.com/"
-  vpc-west-cidr       = "172.3.0.0/16"
+  base-domain      = "sphalerondecays.online"
+  vpc-west-cidr    = "172.3.0.0/16"
 
   vpc-west-config = {
     vpc-name   = "denis-dns-lab"
